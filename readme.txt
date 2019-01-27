@@ -8,3 +8,11 @@ http://localhost:9200/_cat/health?v
 
 Indicies:
 http://localhost:9200/_cat/indices?v
+
+POST http://localhost:9200/besy/_search {
+                                           "query":{
+                                              "match_all":{}
+                                           }
+                                        }
+
+The term query finds documents that contain the exact term specified in the inverted index
