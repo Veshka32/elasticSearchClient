@@ -35,7 +35,15 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class SearchClient {
+    //RestHighLevelClient client = new RestHighLevelClient(RestClient.builder(new HttpHost("localhost", 9200, "http")));
+    RestHighLevelClient client;
 
+
+    public SearchResponse search() throws IOException {
+        SearchRequest r = new SearchRequest();
+        SearchResponse response = client.search(r, RequestOptions.DEFAULT);
+        return response;
+    }
 //        //or this way
 //        indexRequest = new IndexRequest("posts", "doc", "2")
 //                .source("user", "test",
@@ -60,7 +68,6 @@ public class SearchClient {
 //        response=client.index(indexRequest,RequestOptions.DEFAULT);
 
     public static void main(String[] args) throws IOException {
-        final RestHighLevelClient client = new RestHighLevelClient(RestClient.builder(new HttpHost("localhost", 9200, "http")));
 
 //        //create index
 //        CreateIndexRequest request = new CreateIndexRequest("besy");
@@ -113,26 +120,26 @@ public class SearchClient {
 //        getResponse=client.get(getRequest,RequestOptions.DEFAULT);
 //        System.out.println(getResponse.toString());
 
-        //search
-        SearchRequest searchRequest = new SearchRequest(); //Without arguments this runs against all indices.
-        searchRequest.indices("besy");
-        searchRequest.indicesOptions(IndicesOptions.LENIENT_EXPAND_OPEN);
-
-        SearchSourceBuilder builder = new SearchSourceBuilder(); //Most search parameters are added here
-        builder.timeout(new TimeValue(60, TimeUnit.SECONDS)); //set timeout
-        builder.query(QueryBuilders.matchAllQuery()); //get all
-        searchRequest.source(builder); //Add the SearchSourceBuilder to the SearchRequest.
-        SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
-        System.out.println(searchResponse);
-
-        builder = new SearchSourceBuilder(); //Most search parameters are added here
-        builder.query(new MatchQueryBuilder());
-        searchRequest.source(builder); //Add the SearchSourceBuilder to the SearchRequest.
-        searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
-        System.out.println(searchResponse);
-
-        //https://www.elastic.co/guide/en/elasticsearch/client/java-rest/6.5/java-rest-high-search.html
-        client.close();
+//        //search
+//        SearchRequest searchRequest = new SearchRequest(); //Without arguments this runs against all indices.
+//        searchRequest.indices("besy");
+//        searchRequest.indicesOptions(IndicesOptions.LENIENT_EXPAND_OPEN);
+//
+//        SearchSourceBuilder builder = new SearchSourceBuilder(); //Most search parameters are added here
+//        builder.timeout(new TimeValue(60, TimeUnit.SECONDS)); //set timeout
+//        builder.query(QueryBuilders.matchAllQuery()); //get all
+//        searchRequest.source(builder); //Add the SearchSourceBuilder to the SearchRequest.
+//        SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
+//        System.out.println(searchResponse);
+//
+//        builder = new SearchSourceBuilder(); //Most search parameters are added here
+//        builder.query(new MatchQueryBuilder());
+//        searchRequest.source(builder); //Add the SearchSourceBuilder to the SearchRequest.
+//        searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
+//        System.out.println(searchResponse);
+//
+//        //https://www.elastic.co/guide/en/elasticsearch/client/java-rest/6.5/java-rest-high-search.html
+//        client.close();
     }
 }
 
